@@ -3,4 +3,5 @@
 -- Add any additional options here
 
 vim.cmd([[ let R_assign = 0 ]])
-vim.g.codeium_disable_bindings = 1
+vim.g.codeium_no_map_tab = 1
+vim.opt.completeopt = "menu,menuone,noinsert,noselect,preview"

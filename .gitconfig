@@ -26,3 +26,7 @@
 	defaultBranch = main
 [alias]
 	dotfiles = !git --git-dir=/home/ashbythorpe/.cfg/ --work-tree=/home/ashbythorpe
+[pull]
+	ff = only
+[credential "https://github.com"]
+	helper = !gh auth git-credential

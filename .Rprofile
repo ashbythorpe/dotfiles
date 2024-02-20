@@ -2,4 +2,6 @@ if (interactive()) {
   suppressMessages(require(devtools))
 }
 
-options(languageserver.diagnostics = FALSE)
+options(
+  cli.theme_dark = TRUE
+)

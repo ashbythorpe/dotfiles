@@ -4,22 +4,14 @@
 
 require("which-key").register({
   ["<leader>h"] = { name = "+Grapple" },
+  ["<leader>z"] = { name = "+Other" },
+  ["<leader>zd"] = { name = "+Duck" },
+  ["<leader>cc"] = { name = "+Compiler" },
+  ["<leader>co"] = { name = "+Overseer" },
+  ["<leader>cr"] = { name = "+REPL" },
+  ["<leader>gC"] = { name = "+Conflict" },
+  ["<leader>gh"] = { name = "+Hunk" },
 })
-
-local function dump(o)
-  if type(o) == "table" then
-    local s = "{ "
-    for k, v in pairs(o) do
-      if type(k) ~= "number" then
-        k = '"' .. k .. '"'
-      end
-      s = s .. "[" .. k .. "] = " .. dump(v) .. ","
-    end
-    return s .. "} "
-  else
-    return tostring(o)
-  end
-end
 
 vim.keymap.set("n", ";", function()
   local id = 0
@@ -96,3 +88,48 @@ vim.keymap.set("n", "<leader>bx", function()
   end)
   require("bufferline.ui").refresh()
 end, { desc = "Reset pinned buffers" })
+
+local function get_cwd_as_name()
+  local dir = vim.fn.getcwd(0)
+  return dir:gsub("[^A-Za-z0-9]", "_")
+end
+
+vim.keymap.set("n", "<leader>qs", function()
+  local overseer = require("overseer")
+  overseer.load_task_bundle(get_cwd_as_name(), { ignore_missing = true })
+  require("persistence").load()
+end, { desc = "Restore session" })
+
+vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, { desc = "Rename" })
+
+vim.keymap.set("n", "<leader>u1", function()
+  if vim.opt.colorcolumn:get()[1] == nil then
+    vim.opt.colorcolumn = { 80 }
+  else
+    vim.opt.colorcolumn = { nil }
+  end
+end, { desc = "Toggle colorcolumn" })
+
+vim.keymap.set("n", "<leader>u2", function()
+  if vim.b.copilot_enabled == nil then
+    vim.b.copilot_enabled = false
+  else
+    vim.b.copilot_enabled = not vim.b.copilot_enabled
+  end
+end, { desc = "Toggle Copilot" })
+
+-- vim.keymap.set("n", "<leader>u2", function()
+--   if vim.g.codeium_enabled == nil then
+--     vim.g.codeium_enabled = false
+--   else
+--     vim.g.codeium_enabled = not vim.g.codeium_enabled
+--   end
+-- end, { desc = "Toggle Codeium" })
+
+vim.keymap.set("n", "<leader>u3", function()
+  if vim.g.colors_name == "tokyonight" then
+    vim.cmd.colorscheme("oxocarbon")
+  else
+    vim.cmd.colorscheme("tokyonight")
+  end
+end, { desc = "Toggle colorscheme" })

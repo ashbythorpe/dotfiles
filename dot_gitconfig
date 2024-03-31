@@ -29,8 +29,6 @@
 	name = Ashby Thorpe
 [init]
 	defaultBranch = main
-[alias]
-	dotfiles = !git --git-dir=/home/ashbythorpe/.cfg/ --work-tree=/home/ashbythorpe
 [pull]
 	ff = only
 [credential]

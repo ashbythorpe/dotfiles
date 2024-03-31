@@ -1,0 +1,5 @@
+[plugin]
+prepend_previewers = [
+    { name = "*.md", run = "glow" },
+    { mime = "text/csv", run = "miller" },
+]

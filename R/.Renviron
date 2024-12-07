@@ -1,0 +1,3 @@
+RSTUDIO_PANDOC=/usr/lib/rstudio/resources/app/bin/quarto/bin/tools
+RSTUDIO_WINUTILS=bin/winutils
+RMARKDOWN_MATHJAX_PATH=/usr/lib/rstudio/resources/app/resources/mathjax-27

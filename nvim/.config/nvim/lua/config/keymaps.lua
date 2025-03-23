@@ -3,9 +3,9 @@
 -- Add any additional keymaps here
 
 require("which-key").add({
-  { "<leader>z", group = "Other" },
-  { "<leader>zd", group = "Duck" },
-  { "<leader>zp", group = "Pets" },
+  { "<leader>o", group = "Other" },
+  { "<leader>od", group = "Duck" },
+  { "<leader>op", group = "Pets" },
 })
 
 vim.keymap.set("n", ",", function()
@@ -52,17 +52,6 @@ vim.keymap.set("n", "<leader>bx", function()
   end)
   require("bufferline.ui").refresh()
 end, { desc = "Reset pinned buffers" })
-
-local function get_cwd_as_name()
-  local dir = vim.fn.getcwd(0)
-  return dir:gsub("[^A-Za-z0-9]", "_")
-end
-
-vim.keymap.set("n", "<leader>qs", function()
-  local overseer = require("overseer")
-  overseer.load_task_bundle(get_cwd_as_name(), { ignore_missing = true })
-  require("persistence").load()
-end, { desc = "Restore session" })
 
 vim.keymap.set("n", "<leader>u|", function()
   if vim.opt.colorcolumn:get()[1] == nil then

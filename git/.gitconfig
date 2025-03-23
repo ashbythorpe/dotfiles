@@ -1,27 +1,28 @@
 [core]
     pager = delta
-	excludesFile = ~/.gitignore
+    excludesFile = ~/.gitignore
 
 [interactive]
     diffFilter = delta --color-only
 
 [delta]
-    navigate = true    # use n and N to move between diff sections
-    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-    minus-style                   = syntax "#3a273a"
-    minus-non-emph-style          = syntax "#3a273a"
-    minus-emph-style              = syntax "#6b2e43"
-    minus-empty-line-marker-style = syntax "#3a273a"
-    line-numbers-minus-style      = "#b55a67"
-    plus-style                    = syntax "#273849"
-    plus-non-emph-style           = syntax "#273849"
-    plus-emph-style               = syntax "#305f6f"
-    plus-empty-line-marker-style  = syntax "#273849"
-    line-numbers-plus-style       = "#627259"
+    navigate = true
+    dark = true
+    plus-style                   = syntax "#3a273a"
+    plus-non-emph-style          = syntax "#3a273a"
+    plus-emph-style              = syntax "#6b2e43"
+    plus-empty-line-marker-style = syntax "#3a273a"
+    line-numbers-plus-style      = "#e26a75"
+    minus-style                    = syntax "#273849"
+    minus-non-emph-style           = syntax "#273849"
+    minus-emph-style               = syntax "#305f6f"
+    minus-empty-line-marker-style  = syntax "#273849"
+    line-numbers-minus-style       = "#b8db87"
     line-numbers-zero-style       = "#3b4261"
 
 [merge]
     tool = diffview
+    conflictstyle = zdiff3
 [mergetool]
     prompt = false
     keepBackup = false
@@ -31,15 +32,17 @@
 [diff]
     colorMoved = default
 [user]
-	email = ashbythorpe@gmail.com
-	name = Ashby Thorpe
+    email = ashbythorpe@gmail.com
+    name = Ashby Thorpe
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [pull]
-	ff = only
+    ff = only
 [credential]
-	helper = cache
+    helper = cache
 [credential "https://github.com"]
-	helper = !gh auth git-credential
+    helper = !/usr/bin/gh auth git-credential
 [github]
-	user = ashbythorpe
+    user = ashbythorpe
+[credential "https://gist.github.com"]
+    helper = !/usr/bin/gh auth git-credential

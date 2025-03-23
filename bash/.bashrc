@@ -25,7 +25,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -75,8 +75,8 @@ esac
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
-  #alias dir='dir --color=auto'
-  #alias vdir='vdir --color=auto'
+  alias dir='dir --color=auto'
+  alias vdir='vdir --color=auto'
 
   alias grep='grep --color=auto'
   alias fgrep='fgrep --color=auto'
@@ -84,7 +84,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
 alias ll='ls -alF'
@@ -120,25 +120,6 @@ fi
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/ashbythorpe/miniforge3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
-if [ $? -eq 0 ]; then
-  eval "$__conda_setup"
-else
-  if [ -f "/home/ashbythorpe/miniforge3/etc/profile.d/conda.sh" ]; then
-    . "/home/ashbythorpe/miniforge3/etc/profile.d/conda.sh"
-  else
-    export PATH="/home/ashbythorpe/miniforge3/bin:$PATH"
-  fi
-fi
-unset __conda_setup
-
-if [ -f "/home/ashbythorpe/miniforge3/etc/profile.d/mamba.sh" ]; then
-  . "/home/ashbythorpe/miniforge3/etc/profile.d/mamba.sh"
-fi
-# <<< conda initialize <<<
-
 function yy() {
   local tmp
   tmp="$(mktemp -t "yazi-cwd.XXXXX")"
@@ -148,43 +129,84 @@ function yy() {
   fi
   rm -f -- "$tmp"
 }
+
 function addr2lines() (
   perl -ne '$m = s/(.*).*\(([^)]*)\).*/gdb -nh -q -batch -ex "info line *\2" \1/;print $_ if $m' | bash
 )
 
-find_command="find \$(pwd) -type d \( -name node_modules -o -name .git -o -name anaconda3 -o -name snap -o -name x86_64-pc-linux-gnu-library -o -name tmp -o -name Android -o -name PycharmProjects -o -name AndroidStudioProjects -o -name android-studio -o -name pycharm-community-2023.2.4 -o -name cmdline-tools -o -name Downloads -o -path '*/.*' \) -prune -o -name '*' -type d -print | fzf"
+# fzf tokyonight theme
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+  --highlight-line \
+  --info=inline-right \
+  --ansi \
+  --layout=reverse \
+  --border=none
+  --color=bg+:#2d3f76 \
+  --color=bg:#1e2030 \
+  --color=border:#589ed7 \
+  --color=fg:#c8d3f5 \
+  --color=gutter:#1e2030 \
+  --color=header:#ff966c \
+  --color=hl+:#65bcff \
+  --color=hl:#65bcff \
+  --color=info:#545c7e \
+  --color=marker:#ff007c \
+  --color=pointer:#ff007c \
+  --color=prompt:#65bcff \
+  --color=query:#c8d3f5:regular \
+  --color=scrollbar:#589ed7 \
+  --color=separator:#ff966c \
+  --color=spinner:#ff007c \
+"
 
-alias f="cd ~ && cd \$($find_command)"
+_find_dir() {
+  local result
+  result=$(fd . -td --absolute-path --exclude anaconda3 --exclude snap --exclude x86_64-pc-linux-gnu-library --exclude Downloads "$1" | fzf)
 
+  echo "$result"
+}
+
+function f() {
+  local result
+  result=$(_find_dir ~)
+
+  if [[ "$result" != "" ]]; then
+    cd "$result" || exit
+  fi
+}
+
+ff() {
+  local result
+  result=$(_find_dir "$(pwd)")
+
+  if [[ "$result" != "" ]]; then
+    cd "$result" || exit
+  fi
+}
+
+# Setup hyperlink formatting for ripgrep and ls
 alias rg="rg --hyperlink-format=kitty"
 alias ls="ls --hyperlink=auto --color=auto"
 
 alias mergetool="nvim -c DiffviewOpen"
-
-ff() {
-  x=$(eval "$find_command")
-
-  if [[ "$x" != "" ]]; then
-    cd "$x" || exit
-  fi
-}
 
 export ANDROID_HOME=/opt/android-sdk
 
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 source <(carapace _carapace)
 
+# Path setup
 export PATH="/home/ashbythorpe/.local/share/bob/nvim-bin:$PATH"
 export PATH="/home/ashbythorpe/.local/bin:$PATH"
-export PATH="/home/ashbythorpe/Downloads/idea-IU-233.14475.28/bin:$PATH"
-export PATH="/home/ashbythorpe/Downloads/apache-maven-3.9.6/bin:$PATH"
+export PATH="/home/ashbythorpe/.local/apps/idea-IU-233.14475.28/bin:$PATH"
+export PATH="/home/ashbythorpe/.local/apps/apache-maven-3.9.6/bin:$PATH"
 export PATH="/usr/local/go/bin:$PATH"
-export PATH="/home/ashbythorpe/Downloads/zig-linux-x86_64-0.11.0:$PATH"
-export PATH="/home/ashbythorpe/Downloads/flutter/bin:$PATH"
+export PATH="/home/ashbythorpe/.local/apps/zig-linux-x86_64-0.11.0:$PATH"
+export PATH="/home/ashbythorpe/.local/apps/flutter/bin:$PATH"
 export PATH="/opt/android-sdk/cmdline-tools/latest/bin:$PATH"
 export PATH="/home/ashbythorpe/.config/emacs/bin:$PATH"
 export PATH="/home/ashbythorpe/.cache/rebar3/bin:$PATH"
-export PATH="/home/ashbythorpe/Downloads/yazi-x86_64-unknown-linux-gnu:$PATH"
+export PATH="/home/ashbythorpe/.local/apps/yazi-x86_64-unknown-linux-gnu:$PATH"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -214,8 +236,24 @@ source /home/ashbythorpe/.bash_completions/kittybg.sh
 [ -f "/home/ashbythorpe/.ghcup/env" ] && . "/home/ashbythorpe/.ghcup/env" # ghcup-env
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 . "/home/ashbythorpe/.deno/env"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/ashbythorpe/anaconda3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
+if [ $? -eq 0 ]; then
+  eval "$__conda_setup"
+else
+  if [ -f "/home/ashbythorpe/anaconda3/etc/profile.d/conda.sh" ]; then
+    . "/home/ashbythorpe/anaconda3/etc/profile.d/conda.sh"
+  else
+    export PATH="/home/ashbythorpe/anaconda3/bin:$PATH"
+  fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<

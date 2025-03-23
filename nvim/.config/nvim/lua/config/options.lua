@@ -12,3 +12,5 @@ vim.opt.completeopt = "menu,menuone,noinsert,noselect,preview"
 vim.g.copilot_no_tab_map = true
 
 vim.g.python3_host_prog = vim.fn.expand("~/.virtualenvs/neovim/bin/python3")
+
+vim.g.snacks_animate = false

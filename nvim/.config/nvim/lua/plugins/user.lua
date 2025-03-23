@@ -14,36 +14,6 @@ return {
       end, { expr = true, silent = true })
     end,
   },
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   ---@param opts cmp.ConfigSchema
-  --   opts = function(_, opts)
-  --     local has_words_before = function()
-  --       unpack = unpack or table.unpack
-  --       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  --       return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  --     end
-  --
-  --     local cmp = require("cmp")
-  --
-  --     opts.mapping = vim.tbl_extend("force", opts.mapping, {
-  --       ["<Tab>"] = cmp.mapping(function(fallback)
-  --         if cmp.visible() then
-  --           cmp.confirm({ select = true })
-  --         elseif vim.snippet.active({ direction = 1 }) then
-  --           vim.schedule(function()
-  --             vim.snippet.jump(1)
-  --           end)
-  --         elseif has_words_before() then
-  --           cmp.complete()
-  --         else
-  --           fallback()
-  --         end
-  --       end, { "i", "s" }),
-  --     })
-  --     opts.mapping["<CR>"] = nil
-  --   end,
-  -- },
   {
     "stevearc/oil.nvim",
     event = "VeryLazy",
@@ -69,46 +39,6 @@ return {
         desc = "Open oil in parent directory",
       },
     },
-  },
-  {
-    "mikavilpas/yazi.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-      "nvim-lua/plenary.nvim",
-    },
-
-    keys = {
-      {
-        "<leader>fy",
-        function()
-          require("yazi").yazi()
-        end,
-        { desc = "Open Yazi" },
-      },
-    },
-  },
-  {
-    "kevinhwang91/nvim-ufo",
-    keys = { { "za" } },
-    dependencies = {
-      "kevinhwang91/promise-async",
-    },
-    config = function()
-      vim.o.foldcolumn = "1"
-      vim.o.foldlevel = 99
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-
-      vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-      vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-
-      require("ufo").setup({
-        provider_selector = function(bufnr, filetype, buftype)
-          return { "treesitter", "indent" }
-        end,
-      })
-    end,
   },
   {
     "sindrets/diffview.nvim",
@@ -185,25 +115,7 @@ return {
 
       return opts
     end,
-    keys = {
-      { "<leader>gd", "<Cmd>DiffviewOpen<CR>", desc = "Status/diffs" },
-      { "<leader>gf", "<Cmd>DiffviewFileHistory %<CR>", desc = "Current file history" },
-      { "<leader>gF", "<Cmd>DiffviewFileHistory<CR>", desc = "All file history" },
-    },
   },
-  {
-    "folke/zen-mode.nvim",
-    keys = {
-      {
-        "<leader>uz",
-        function()
-          require("zen-mode").toggle({})
-        end,
-        desc = "Toggle Zen mode",
-      },
-    },
-  },
-  "folke/twilight.nvim",
   {
     "rgroli/other.nvim",
     keys = {
@@ -230,16 +142,6 @@ return {
     end,
   },
   {
-    "mbbill/undotree",
-    keys = {
-      {
-        "<leader>uu",
-        "<cmd>UndotreeToggle<cr>",
-        desc = "Toggle Undotree",
-      },
-    },
-  },
-  {
     "Wansmer/treesj",
     keys = {
       {
@@ -256,9 +158,7 @@ return {
     },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
-  {
-    "Bekaboo/dropbar.nvim",
-  },
+  -- "Bekaboo/dropbar.nvim",
   {
     "akinsho/flutter-tools.nvim",
     lazy = false,
@@ -268,14 +168,14 @@ return {
     "tamton-aquib/duck.nvim",
     keys = {
       {
-        "<leader>zdd",
+        "<leader>odd",
         function()
           require("duck").hatch()
         end,
         desc = "Hatch duck",
       },
       {
-        "<leader>zdk",
+        "<leader>odk",
         function()
           require("duck").cook()
         end,
@@ -318,15 +218,10 @@ return {
   },
   {
     "mikesmithgh/kitty-scrollback.nvim",
-    enabled = true,
     lazy = true,
     cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
     event = { "User KittyScrollbackLaunch" },
-    -- version = '*', -- latest stable version, may have breaking changes if major version changed
-    -- version = '^4.0.0', -- pin major version, include fixes and features that do not have breaking changes
-    config = function()
-      require("kitty-scrollback").setup()
-    end,
+    config = true,
   },
   {
     "giusgad/pets.nvim",
@@ -336,7 +231,7 @@ return {
     },
     keys = {
       {
-        "<leader>zpn",
+        "<leader>opn",
         function()
           local name = math.random(10000)
 
@@ -345,7 +240,7 @@ return {
         desc = "New pet",
       },
       {
-        "<leader>zpk",
+        "<leader>opk",
         "<cmd>PetsKillAll<cr>",
         desc = "Kill all pets",
       },
@@ -354,35 +249,31 @@ return {
   {
     "davidmh/mdx.nvim",
     config = true,
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-  },
-  {
-    "otavioschwanck/arrow.nvim",
-    opts = {
-      show_icons = true,
-      leader_key = ";",
-      buffer_leader_key = "m",
-    },
   },
   {
     "HakonHarnes/img-clip.nvim",
     event = "VeryLazy",
-    opts = {},
+    config = true,
   },
-  {
-    "3rd/image.nvim",
-    dependencies = {
-      "kiyoon/magick.nvim",
-    },
-    opts = {
-      max_width = 100,
-      max_height = 12,
-      max_height_window_percentage = math.huge, -- this is necessary for a good experience
-      max_width_window_percentage = math.huge,
-      window_overlap_clear_enabled = true,
-      window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
-    },
-  },
+  -- {
+  --   "3rd/image.nvim",
+  --   dependencies = {
+  --     "kiyoon/magick.nvim",
+  --   },
+  --   opts = {
+  --     max_width = 100,
+  --     max_height = 12,
+  --     max_height_window_percentage = math.huge, -- this is necessary for a good experience
+  --     max_width_window_percentage = math.huge,
+  --     window_overlap_clear_enabled = true,
+  --     window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
+  --   },
+  --   integrations = {
+  --     markdown = {
+  --       enabled = false,
+  --     },
+  --   },
+  -- },
   {
     "benlubas/molten-nvim",
     version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
@@ -398,16 +289,80 @@ return {
     "quarto-dev/quarto-nvim",
     dependencies = {
       "jmbuhr/otter.nvim",
-      "nvim-treesitter/nvim-treesitter",
     },
   },
   "tpope/vim-sleuth",
+  "ronisbr/nano-theme.nvim",
   {
-    "ronisbr/nano-theme.nvim",
+    "Saghen/blink.cmp",
+    opts = {
+      keymap = {
+        preset = "super-tab",
+      },
+    },
   },
   {
     "kwakzalver/duckytype.nvim",
     config = true,
     cmd = "DuckyType",
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        kulala_ls = {},
+      },
+    },
+  },
+  {
+    "hedyhli/markdown-toc.nvim",
+    cmd = { "Mtoc" },
+    config = true,
+  },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      styles = {
+        zen = {
+          backdrop = {
+            transparent = false,
+          },
+        },
+      },
+      image = {
+        enabled = true,
+        doc = {
+          inline = false,
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader>su",
+        function()
+          Snacks.picker.undo()
+        end,
+        desc = "Undo history",
+      },
+    },
+  },
+  {
+    "folke/which-key.nvim",
+    opts = {
+      preset = "classic",
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        kulala_ls = { mason = false },
+        air = { mason = false },
+      },
+    },
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    enabled = false,
   },
 }

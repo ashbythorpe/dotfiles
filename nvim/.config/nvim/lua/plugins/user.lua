@@ -365,4 +365,16 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     enabled = false,
   },
+  {
+    "folke/flash.nvim",
+    opts = {
+      modes = {
+        char = {
+          highlight = {
+            backdrop = false,
+          },
+        },
+      },
+    },
+  },
 }

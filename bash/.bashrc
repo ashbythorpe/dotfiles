@@ -192,9 +192,6 @@ alias mergetool="nvim -c DiffviewOpen"
 
 export ANDROID_HOME=/opt/android-sdk
 
-export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
-source <(carapace _carapace)
-
 # Path setup
 export PATH="/home/ashbythorpe/.local/share/bob/nvim-bin:$PATH"
 export PATH="/home/ashbythorpe/.local/bin:$PATH"
@@ -257,3 +254,11 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# completion
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+source <(carapace _carapace)
+
+eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+eval "$(uv generate-shell-completion bash)"
+eval "$(uvx --generate-shell-completion bash)"

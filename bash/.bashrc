@@ -204,6 +204,8 @@ export PATH="/opt/android-sdk/cmdline-tools/latest/bin:$PATH"
 export PATH="/home/ashbythorpe/.config/emacs/bin:$PATH"
 export PATH="/home/ashbythorpe/.cache/rebar3/bin:$PATH"
 export PATH="/home/ashbythorpe/.local/apps/yazi-x86_64-unknown-linux-gnu:$PATH"
+export PATH="/home/ashbythorpe/go/bin:$PATH"
+export PATH="/home/ashbythorpe/.spicetify:$PATH"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

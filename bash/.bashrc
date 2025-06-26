@@ -219,10 +219,6 @@ export KERL_CONFIGURE_OPTIONS="--disable-debug"
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/completions/asdf.bash"
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 eval "$(zoxide init bash)"
 
 eval "$(starship init bash)"
@@ -230,37 +226,23 @@ eval "$(starship init bash)"
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
 
-source /home/ashbythorpe/.bash_completions/kittybg.sh
-
 [ -f "/home/ashbythorpe/.ghcup/env" ] && . "/home/ashbythorpe/.ghcup/env" # ghcup-env
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 . "/home/ashbythorpe/.deno/env"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/ashbythorpe/anaconda3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
-if [ $? -eq 0 ]; then
-  eval "$__conda_setup"
-else
-  if [ -f "/home/ashbythorpe/anaconda3/etc/profile.d/conda.sh" ]; then
-    . "/home/ashbythorpe/anaconda3/etc/profile.d/conda.sh"
-  else
-    export PATH="/home/ashbythorpe/anaconda3/bin:$PATH"
-  fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 # completion
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 source <(carapace _carapace)
 
-eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
-eval "$(uv generate-shell-completion bash)"
-eval "$(uvx --generate-shell-completion bash)"
+# eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+# eval "$(uv generate-shell-completion bash)"
+# eval "$(uvx --generate-shell-completion bash)"
+
+# fnm
+FNM_PATH="/home/ashbythorpe/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env)"
+fi

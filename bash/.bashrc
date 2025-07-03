@@ -121,12 +121,10 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 function yy() {
-  local tmp
-  tmp="$(mktemp -t "yazi-cwd.XXXXX")"
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   yazi "$@" --cwd-file="$tmp"
-  if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-    cd -- "$cwd" || exit
-  fi
+  IFS= read -r -d '' cwd <"$tmp"
+  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
   rm -f -- "$tmp"
 }
 

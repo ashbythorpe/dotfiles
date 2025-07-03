@@ -329,12 +329,6 @@ return {
           },
         },
       },
-      image = {
-        enabled = true,
-        doc = {
-          inline = false,
-        },
-      },
     },
     keys = {
       {

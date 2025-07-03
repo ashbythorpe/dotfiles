@@ -215,7 +215,6 @@ export KERL_CONFIGURE_OPTIONS="--disable-debug"
 
 # asdf
 . "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/completions/asdf.bash"
 
 eval "$(zoxide init bash)"
 
@@ -233,10 +232,6 @@ eval "$(atuin init bash --disable-up-arrow)"
 # completion
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 source <(carapace _carapace)
-
-# eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
-# eval "$(uv generate-shell-completion bash)"
-# eval "$(uvx --generate-shell-completion bash)"
 
 # fnm
 FNM_PATH="/home/ashbythorpe/.local/share/fnm"

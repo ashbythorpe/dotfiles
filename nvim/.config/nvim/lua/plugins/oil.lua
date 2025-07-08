@@ -1,0 +1,26 @@
+return {
+  {
+    "stevearc/oil.nvim",
+    event = "VeryLazy",
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {
+      win_options = {
+        signcolumn = "number",
+      },
+      keymaps = {
+        ["q"] = "actions.close",
+      },
+    },
+    keys = {
+      {
+        "-",
+        "<CMD>Oil<CR>",
+        desc = "Oil",
+      },
+    },
+  },
+  {
+    "benomahony/oil-git.nvim",
+  },
+}

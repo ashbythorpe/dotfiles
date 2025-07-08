@@ -1,16 +1,64 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
-require("config/private/private")
+vim.o.number = true
+vim.o.relativenumber = true
 
-vim.opt.tabstop = nil
+vim.o.showmode = false
 
-vim.cmd([[ let R_assign = 0 ]])
-vim.g.codeium_no_map_tab = 1
-vim.opt.completeopt = "menu,menuone,noinsert,noselect,preview"
-vim.g.copilot_no_tab_map = true
+vim.schedule(function()
+  vim.o.clipboard = vim.env.SSH_TTY and "" or "unnamedplus"
+end)
 
-vim.g.python3_host_prog = vim.fn.expand("~/.virtualenvs/neovim/bin/python3")
+vim.o.breakindent = true
 
-vim.g.snacks_animate = false
+vim.o.undofile = true
+
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+vim.o.signcolumn = "yes"
+
+vim.o.updatetime = 250
+vim.o.timeoutlen = 300
+
+vim.o.splitright = true
+vim.o.splitbelow = true
+
+vim.o.inccommand = "split"
+
+vim.o.scrolloff = 4
+
+vim.o.confirm = true
+
+vim.o.mouse = "a"
+
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+
+vim.o.list = true
+
+vim.o.expandtab = true
+
+vim.o.foldlevel = 99
+
+vim.o.laststatus = 3
+
+vim.o.linebreak = true
+
+vim.o.ruler = false
+
+vim.o.sidescrolloff = 8
+vim.o.smartindent = true
+
+vim.opt.spelllang = { "en_gb", "en_us" }
+
+vim.o.virtualedit = "block"
+
+vim.o.winminwidth = 5
+
+vim.o.wrap = false
+
+vim.o.smoothscroll = true
+
+vim.g.markdown_recommended_style = 0

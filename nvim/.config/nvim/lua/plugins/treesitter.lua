@@ -7,80 +7,107 @@ return {
     config = function()
       require("nvim-treesitter").setup({})
     end,
-    opts = {
-      ensure_installed = {
-        "bash",
-        "c",
-        "diff",
-        "html",
-        "lua",
-        "luadoc",
-        "markdown",
-        "markdown_inline",
-        "query",
-        "vim",
-        "vimdoc",
-      },
-      -- Autoinstall languages that are not installed
-      auto_install = true,
-      highlight = {
-        enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { "ruby" },
-      },
-      indent = { enable = true, disable = { "ruby" } },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
-      textobjects = {
-        move = {
-          enable = true,
-          goto_next_start = {
-            ["]f"] = "@function.outer",
-            ["]c"] = "@class.outer",
-            ["]a"] = "@parameter.inner",
-          },
-          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
-          goto_previous_start = {
-            ["[f"] = "@function.outer",
-            ["[c"] = "@class.outer",
-            ["[a"] = "@parameter.inner",
-          },
-          goto_previous_end = {
-            ["[F"] = "@function.outer",
-            ["[C"] = "@class.outer",
-            ["[A"] = "@parameter.inner",
-          },
-        },
-      },
-    },
-    -- There are additional nvim-treesitter modules that you can use to interact
-    -- with nvim-treesitter. You should go explore a few and see what interests you:
-    --
-    --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-    --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-    --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    opts = {},
+    init = function()
+      -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+      local regex_highlighting = { "ruby" }
+
+      -- Enable treesitter highlighting and indent by default
+      vim.api.nvim_create_autocmd("FileType", {
+        desc = "Enable treesitter highlighting",
+        callback = function(ctx)
+          local hasStarted = pcall(vim.treesitter.start)
+
+          if not hasStarted then
+            return
+          end
+
+          if vim.list_contains(regex_highlighting, ctx.match) then
+            vim.bo.syntax = "on"
+            return
+          end
+
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
     opts = {
       select = {
-        -- Automatically jump forward to textobj, similar to targets.vim
         lookahead = true,
       },
       move = {
         set_jumps = true,
       },
     },
-    keys = {},
+    keys = {
+      {
+        "af",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "function",
+      },
+      {
+        "if",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "function",
+      },
+      {
+        "ac",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "class",
+      },
+      {
+        "ic",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "class",
+      },
+      {
+        "]f",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next("@function.outer", "textobjects")
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Next function",
+      },
+      {
+        "[f",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous("@function.outer", "textobjects")
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Next function",
+      },
+      {
+        "]c",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next("@class.outer", "textobjects")
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Next class",
+      },
+      {
+        "[c",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous("@class.outer", "textobjects")
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Next class",
+      },
+    },
   },
 }

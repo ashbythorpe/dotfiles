@@ -12,6 +12,8 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    lazy = false,
+    -- event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
       "mason-org/mason-lspconfig.nvim",
@@ -46,11 +48,42 @@ return {
         },
       })
 
+      vim.lsp.config("*", {
+        ---@param client vim.lsp.Client
+        on_attach = function(client, bufnr)
+          -- Setup inlay hints
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+          end
+        end,
+      })
+
       vim.lsp.enable("lua_ls")
       vim.lsp.config("lua_ls", {
         root_dir = function(bufnr, on_dir)
           on_dir(require("lazydev").find_workspace(bufnr))
         end,
+        settings = {
+          Lua = {
+            workspace = {
+              checkThirdParty = false,
+            },
+            completion = {
+              callSnippet = "Replace",
+            },
+            doc = {
+              privateName = { "^_" },
+            },
+            hint = {
+              enable = true,
+              setType = false,
+              paramType = true,
+              paramName = "Disable",
+              semicolon = "Disable",
+              arrayIndex = "Disable",
+            },
+          },
+        },
       })
 
       vim.lsp.enable("vtsls")
@@ -91,6 +124,76 @@ return {
           },
         },
       })
+
+      vim.lsp.enable("ruff")
+      vim.lsp.config("ruff", {
+        cmd_env = { RUFF_TRACE = "messages" },
+        init_options = {
+          settings = {
+            logLevel = "error",
+          },
+        },
+        on_attach = function()
+          vim.keymap.set("n", "<leader>co", function()
+            vim.lsp.buf.code_action({
+              apply = true,
+              context = {
+                only = { "source.organizeImports" },
+                diagnostics = {},
+              },
+            })
+          end, { desc = "Organize Imports" })
+        end,
+      })
+
+      vim.lsp.enable("pyright")
     end,
+    keys = {
+      { "<leader>cd", vim.diagnostic.open_float, desc = "Line Diagnostics" },
+      { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Actions" },
+      { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
+      {
+        "]d",
+        function()
+          vim.diagnostic.jump({ count = 1 })
+        end,
+        desc = "Next diagnostic",
+      },
+      {
+        "[d",
+        function()
+          vim.diagnostic.jump({ count = -1 })
+        end,
+        desc = "Previous diagnostic",
+      },
+      {
+        "]e",
+        function()
+          vim.diagnostic.jump({ count = 1, severity = "ERROR" })
+        end,
+        desc = "Next error",
+      },
+      {
+        "[e",
+        function()
+          vim.diagnostic.jump({ count = -1, severity = "ERROR" })
+        end,
+        desc = "Previous error",
+      },
+      {
+        "]w",
+        function()
+          vim.diagnostic.jump({ count = 1, severity = "WARN" })
+        end,
+        desc = "Next warning",
+      },
+      {
+        "[w",
+        function()
+          vim.diagnostic.jump({ count = -1, severity = "WARN" })
+        end,
+        desc = "Previous warning",
+      },
+    },
   },
 }

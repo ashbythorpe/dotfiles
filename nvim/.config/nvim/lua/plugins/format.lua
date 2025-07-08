@@ -34,6 +34,28 @@ return {
       formatters_by_ft = {
         lua = { "stylua" },
         r = { "air" },
+
+        -- JavaScript / TypeScript
+        -- https://biomejs.dev/internals/language-support/
+        javascript = { "biome" },
+        javascriptreact = { "biome" }, -- jsx
+        typescript = { "biome" },
+        typescriptreact = { "biome" }, -- tsx
+        astro = { "biome" },
+        css = { "biome" },
+        graphql = { "biome" },
+        json = { "biome" },
+        jsonc = { "biome" },
+        -- https://prettier.io/docs/
+        handlebars = { "prettier" },
+        html = { "prettier" },
+        less = { "prettier" },
+        scss = { "prettier" },
+        markdown = { "prettier" },
+        vue = { "prettier" },
+        yaml = { "prettier" },
+        svelte = { "prettier" }
+
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --

@@ -78,6 +78,11 @@ return {
         desc = "Open Snipe buffer menu",
       },
     },
-    opts = {},
+    opts = {
+      ui = {
+        text_align = "file-first",
+      },
+      sort = "last"
+    },
   },
 }

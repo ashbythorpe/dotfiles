@@ -9,6 +9,7 @@ return {
         function()
           require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
         end,
+        desc = "Search and replace",
       },
       {
         "<leader>sr",
@@ -16,6 +17,7 @@ return {
         function()
           require("grug-far").with_visual_selection()
         end,
+        desc = "Search and replace",
       },
     },
   },

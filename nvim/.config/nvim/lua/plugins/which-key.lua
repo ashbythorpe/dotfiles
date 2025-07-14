@@ -3,19 +3,22 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      { "<leader>f", group = "file" }, -- group
-      {
-        "<leader>b",
-        group = "buffers",
-        expand = function()
-          return require("which-key.extras").expand.buf()
-        end,
+      spec = {
+        {
+          "<leader>b",
+          group = "buffers",
+          expand = function()
+            return require("which-key.extras").expand.buf()
+          end,
+        },
+        { "<leader>c", group = "code" },
+        { "<leader>f", group = "file" },
+        { "<leader>g", group = "git" },
+        { "<leader>q", group = "session" },
+        { "<leader>s", group = "search" },
+        { "<leader>u", group = "toggle" },
+        { "<leader>x", group = "trouble", icon = { icon = "󰝖", color = "red" } },
       },
-      { "<leader>g", group = "git" },
-      { "<leader>q", group = "session" },
-      { "<leader>s", group = "search" },
-      { "<leader>u", group = "toggle" },
-      { "<leader>x", group = "trouble" },
     },
     keys = {
       {

@@ -490,27 +490,52 @@ return {
           Snacks.toggle.inlay_hints():map("<leader>uh")
           Snacks.toggle.indent():map("<leader>ug")
 
-          Snacks.toggle.new({
-            id = "format_on_save",
-            name = "Format on save",
-            get = function()
-              return vim.g.autoformat
-            end,
-            set = function(state)
-              vim.g.autoformat = not state
-            end,
-          }):map("<leader>uf")
+          Snacks.toggle
+            .new({
+              id = "format_on_save",
+              name = "Format on save",
+              get = function()
+                return vim.g.autoformat
+              end,
+              set = function(state)
+                vim.g.autoformat = not state
+              end,
+            })
+            :map("<leader>uf")
+
+          Snacks.toggle
+            .new({
+              id = "format_on_save",
+              name = "Format on save (buffer)",
+              get = function()
+                return vim.b.autoformat
+              end,
+              set = function(state)
+                vim.b.autoformat = not state
+              end,
+            })
+            :map("<leader>uF")
 
           Snacks.toggle.new({
-            id = "format_on_save",
-            name = "Format on save (buffer)",
+            id = "virtual_lines",
+            name = "Virtual lines",
             get = function()
-              return vim.b.autoformat
+              local config = vim.diagnostic.config().virtual_lines
+
+              if config then
+                return true
+              else
+                return false
+              end
             end,
             set = function(state)
-              vim.b.autoformat = not state
+              if state then
+                vim.diagnostic.config({ virtual_lines = { current_line = true }, virtual_text = false })
+              else
+                vim.diagnostic.config({ virtual_lines = false, virtual_text = true })
+              end
             end,
-          }):map("<leader>uF")
+          }):map("<leader>uv")
         end,
       })
     end,

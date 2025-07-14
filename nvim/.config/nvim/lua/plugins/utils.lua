@@ -77,6 +77,17 @@ return {
         end,
         desc = "Open Snipe buffer menu",
       },
+      {
+        "<leader>bc",
+        function ()
+          local buffers = require("snipe").get_sorted_buffer_list()
+          -- Keep 5 buffers open
+          vim.tbl_map(function (buffer)
+            vim.api.nvim_buf_delete(buffer.id, {})
+          end, vim.list_slice(buffers, 6))
+        end,
+        desc = "Close old buffers"
+      }
     },
     opts = {
       ui = {

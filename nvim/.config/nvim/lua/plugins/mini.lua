@@ -34,6 +34,15 @@ return {
         update_n_lines = "gsn", -- Update `n_lines`
       },
     },
+    keys = {
+      { "gsa", desc = "Add surrounding", mode = { "n", "v" } },
+      { "gsd", desc = "Delete Surrounding" },
+      { "gsf", desc = "Find Right Surrounding" },
+      { "gsF", desc = "Find Left Surrounding" },
+      { "gsh", desc = "Highlight Surrounding" },
+      { "gsr", desc = "Replace Surrounding" },
+      { "gsn", desc = "Update `MiniSurround.config.n_lines`" }
+    }
   },
   {
     "echasnovski/mini.diff",

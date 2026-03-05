@@ -54,7 +54,12 @@ return {
         markdown = { "prettier" },
         vue = { "prettier" },
         yaml = { "prettier" },
-        svelte = { "prettier" }
+        svelte = { "prettier" },
+        json5 = { "prettier" },
+
+        htmldjango = { "djlint" },
+
+        go = { "goimports", "gofumpt" },
 
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },

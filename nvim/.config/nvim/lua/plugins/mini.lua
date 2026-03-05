@@ -1,18 +1,18 @@
 return {
   {
-    "echasnovski/mini.pairs",
+    "nvim-mini/mini.pairs",
     event = "VeryLazy",
     opts = {},
   },
   {
-    "echasnovski/mini.statusline",
+    "nvim-mini/mini.statusline",
     event = "VeryLazy",
     opts = {
       use_icon = true,
     },
   },
   {
-    "echasnovski/mini.icons",
+    "nvim-mini/mini.icons",
     event = "VeryLazy",
     init = function()
       package.preload["nvim-web-devicons"] = function()
@@ -22,7 +22,7 @@ return {
     end,
   },
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     opts = {
       mappings = {
         add = "gsa", -- Add surrounding in Normal and Visual modes
@@ -41,11 +41,11 @@ return {
       { "gsF", desc = "Find Left Surrounding" },
       { "gsh", desc = "Highlight Surrounding" },
       { "gsr", desc = "Replace Surrounding" },
-      { "gsn", desc = "Update `MiniSurround.config.n_lines`" }
-    }
+      { "gsn", desc = "Update `MiniSurround.config.n_lines`" },
+    },
   },
   {
-    "echasnovski/mini.diff",
+    "nvim-mini/mini.diff",
     event = "VeryLazy",
     keys = {
       {
@@ -63,7 +63,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.ai",
+    "nvim-mini/mini.ai",
     event = "VeryLazy",
     opts = function()
       local ai = require("mini.ai")
@@ -81,5 +81,23 @@ return {
         },
       }
     end,
+  },
+  {
+    "nvim-mini/mini.files",
+    config = true,
+    opts = {
+      mappings = {
+        go_in_plus = "<CR>",
+      },
+    },
+    keys = {
+      {
+        "-",
+        function()
+          MiniFiles.open(vim.api.nvim_buf_get_name(0))
+        end,
+        desc = "Open mini.files",
+      },
+    },
   },
 }

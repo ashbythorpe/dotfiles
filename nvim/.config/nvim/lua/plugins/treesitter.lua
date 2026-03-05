@@ -27,9 +27,24 @@ return {
             return
           end
 
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          if vim.treesitter.query.get(vim.bo.filetype, "indents") then
+            vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+          end
         end,
       })
+
+      -- Add custom filetypes
+      vim.filetype.add({
+        extension = {
+          dj = "djot",
+        },
+        pattern = {
+          ["%.env%.[%w_.-]+"] = "sh",
+        },
+      })
+
+      -- Use the bash parser for kitty config files
+      vim.treesitter.language.register("bash", "kitty")
     end,
   },
   {

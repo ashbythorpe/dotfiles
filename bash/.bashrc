@@ -230,7 +230,7 @@ eval "$(atuin init bash --disable-up-arrow)"
 . "/home/ashbythorpe/.deno/env"
 
 # completion
-export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+export CARAPACE_BRIDGES='bash' # optional
 source <(carapace _carapace)
 
 # fnm
@@ -239,3 +239,26 @@ if [ -d "$FNM_PATH" ]; then
   export PATH="$FNM_PATH:$PATH"
   eval "$(fnm env)"
 fi
+
+# pnpm
+export PNPM_HOME="/home/ashbythorpe/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/home/ashbythorpe/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/home/ashbythorpe/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<

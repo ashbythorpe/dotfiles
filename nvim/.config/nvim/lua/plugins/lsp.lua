@@ -15,8 +15,15 @@ return {
     lazy = false,
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     dependencies = {
-      { "mason-org/mason.nvim", opts = {} },
-      "mason-org/mason-lspconfig.nvim",
+      {
+        "mason-org/mason.nvim",
+        opts = {
+          registries = {
+            "github:mason-org/mason-registry",
+            "github:Crashdummyy/mason-registry",
+          },
+        },
+      },
       "saghen/blink.cmp",
       "folke/lazydev.nvim",
     },
@@ -137,12 +144,50 @@ return {
         end,
       })
 
-      vim.lsp.enable("pyright")
+      vim.lsp.enable("basedpyright")
+      vim.lsp.config("basedpyright", {
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "off",
+            },
+          },
+        },
+      })
+
+      vim.lsp.enable({ "gopls" })
+      vim.lsp.config("gopls", {
+        settings = {
+          gopls = {
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+            staticcheck = true,
+            directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+            semanticTokens = true,
+          },
+        },
+      })
+
+      vim.lsp.enable({ "dockerls", "docker_compose_language_service" })
+
+      vim.lsp.enable({ "cssls", "html" })
+
+      vim.lsp.enable("ocamllsp")
+
+      vim.lsp.enable({ "clangd", "neocmake" })
+
+      vim.lsp.enable("rust_analyzer")
+
+      vim.lsp.enable('wgsl_analyzer')
     end,
     keys = {
-      { "<leader>cd", vim.diagnostic.open_float, desc = "Line Diagnostics" },
-      { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Actions" },
-      { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
       {
         "]d",
         function()
@@ -186,5 +231,9 @@ return {
         desc = "Previous warning",
       },
     },
+  },
+  {
+    "j-hui/fidget.nvim",
+    config = true,
   },
 }

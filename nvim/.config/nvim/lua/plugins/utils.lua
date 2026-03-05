@@ -92,8 +92,15 @@ return {
     opts = {
       ui = {
         text_align = "file-first",
+        preselect_current = true,
+        max_height = 10,
+        persist_tags = false,
       },
       sort = "last"
     },
   },
+  {
+    "danymat/neogen",
+    config = true
+  }
 }

@@ -41,7 +41,11 @@ return {
   {
     "folke/ts-comments.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      lang = {
+        typst = { "// %s", "/* %s */" },
+      },
+    },
   },
   {
     "Wansmer/treesj",
@@ -79,15 +83,15 @@ return {
       },
       {
         "<leader>bc",
-        function ()
+        function()
           local buffers = require("snipe").get_sorted_buffer_list()
           -- Keep 5 buffers open
-          vim.tbl_map(function (buffer)
+          vim.tbl_map(function(buffer)
             vim.api.nvim_buf_delete(buffer.id, {})
           end, vim.list_slice(buffers, 6))
         end,
-        desc = "Close old buffers"
-      }
+        desc = "Close old buffers",
+      },
     },
     opts = {
       ui = {
@@ -96,11 +100,11 @@ return {
         max_height = 10,
         persist_tags = false,
       },
-      sort = "last"
+      sort = "last",
     },
   },
   {
     "danymat/neogen",
-    config = true
-  }
+    config = true,
+  },
 }

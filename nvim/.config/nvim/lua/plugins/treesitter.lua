@@ -4,9 +4,6 @@ return {
     lazy = false,
     branch = "main",
     build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter").setup({})
-    end,
     opts = {},
     init = function()
       -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.

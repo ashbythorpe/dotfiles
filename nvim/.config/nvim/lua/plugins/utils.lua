@@ -69,7 +69,7 @@ return {
     lazy = true,
     cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
     event = { "User KittyScrollbackLaunch" },
-    config = true,
+    opts = {},
   },
   {
     "leath-dub/snipe.nvim",
@@ -105,6 +105,6 @@ return {
   },
   {
     "danymat/neogen",
-    config = true,
+    opts = {},
   },
 }

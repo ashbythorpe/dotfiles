@@ -27,7 +27,7 @@ return {
       "saghen/blink.cmp",
       "folke/lazydev.nvim",
     },
-    config = function()
+    init = function()
       vim.diagnostic.config({
         severity_sort = true,
         float = { border = "rounded", source = "if_many" },
@@ -207,28 +207,28 @@ return {
       {
         "]e",
         function()
-          vim.diagnostic.jump({ count = 1, severity = "ERROR" })
+          vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
         end,
         desc = "Next error",
       },
       {
         "[e",
         function()
-          vim.diagnostic.jump({ count = -1, severity = "ERROR" })
+          vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
         end,
         desc = "Previous error",
       },
       {
         "]w",
         function()
-          vim.diagnostic.jump({ count = 1, severity = "WARN" })
+          vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN })
         end,
         desc = "Next warning",
       },
       {
         "[w",
         function()
-          vim.diagnostic.jump({ count = -1, severity = "WARN" })
+          vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN })
         end,
         desc = "Previous warning",
       },
@@ -236,6 +236,6 @@ return {
   },
   {
     "j-hui/fidget.nvim",
-    config = true,
+    opts = {},
   },
 }

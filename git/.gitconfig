@@ -39,13 +39,7 @@
     defaultBranch = main
 [pull]
     ff = only
-[credential]
-    helper = cache
-[credential "https://github.com"]
-    helper = !/usr/bin/gh auth git-credential
-[github]
-    user = ashbythorpe
-[credential "https://gist.github.com"]
-    helper = !/usr/bin/gh auth git-credential
 [rerere]
 	enabled = true
+[credential]
+	helper = cache

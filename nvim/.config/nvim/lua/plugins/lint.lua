@@ -5,6 +5,7 @@ return {
     require("lint").linters_by_ft = {
       dockerfile = { "hadolint" },
       cmake = { "cmakelint" },
+      sql = { "sqlfluff" },
     }
 
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
